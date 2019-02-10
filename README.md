@@ -22,6 +22,6 @@ This error occurs when trying to open the country selector, or when filling in t
 This error only happens when using f7 with webpack e6 modules. When using html and inline scripts, the error does not occur.
 
 Here are demos of each:
-1) webpack version - https://jacobg.github.io/f7-phone-input/index.html
+1) webpack version - https://jacobg.github.io/f7-phone-input
 2) inline version - https://jacobg.github.io/f7-phone-input/inline.html
 
