@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+        <link rel="stylesheet" type="text/css" href="https://unpkg.com/framework7@3.6.6/css/framework7.min.css"/>
+        <link rel="stylesheet" type="text/css" href="https://unpkg.com/vue-phone-number-input@0.1.6/dist/vue-phone-number-input.css"/>
+
+        <script src="https://unpkg.com/vue@2.5.22/dist/vue.min.js"></script>
+        <script src="https://unpkg.com/framework7@3.6.6/js/framework7.min.js"></script>
+        <script src="https://unpkg.com/framework7-vue@3.6.6/framework7-vue.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"></script>
+    </head>
+    <body>
+        <div id="app">
+            <f7-app :params="f7params">
+                <!-- Statusbar -->
+                <f7-statusbar></f7-statusbar>
+            
+                <!-- Main View -->
+                <f7-view main url="/" />
+            </f7-app>
+        </div>
+
+        <template id="home">
+        <f7-page>
+            <div style="width: 100%">
+            <f7-link href="/phone">Phone</f7-link>
+            </div>
+        </f7-page>
+        </template>
+        
+        <template id="phone">
+        <f7-page>
+            <div style="width: 100%">
+            <vue-phone-number-input v-model="phoneNumber" />
+            </div>
+        </f7-page>
+        </template>
+
+        <script>
+            requirejs.config({
+                'paths': {
+                    'VuePhoneNumberInput': 'https://unpkg.com/vue-phone-number-input@0.1.6/dist/vue-phone-number-input.umd'
+                }
+            });
+
+            // Init F7 Vue Plugin
+            Framework7.use(Framework7Vue)
+
+            require(['VuePhoneNumberInput'],
+                function (VuePhoneNumberInput) {
+            
+                Vue.component('home', {
+                    template: '#home'
+                });
+            
+                Vue.component('phone', {
+                    template: '#phone',
+                    components: {
+                        VuePhoneNumberInput
+                    },
+                    data () {
+                        return {
+                            phoneNumber: null
+                        }
+                    }
+                });
+            
+                new Vue({
+                el: '#app',
+                data() {
+                    return {
+                    // Framework7 params here
+                    f7params: {
+                        root: '#app', // App root element
+                        id: 'io.framework7.testapp', // App bundle ID
+                        name: 'Framework7', // App name
+                        theme: 'auto', // Automatic theme detection
+                        routes: [
+                        {
+                            path: '/',
+                            component: 'home'
+                        },
+                        {
+                            path: '/phone',
+                            component: 'phone'
+                        }
+                        ]
+                    }
+                    }
+                },
+                }); 
+            }
+            )
+        </script>
+    </body>
+</html>
